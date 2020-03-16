@@ -3,8 +3,6 @@ package com.gra.converters.money;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -108,8 +106,13 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         Toast.makeText(this, "Please enter a valid number", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void enableConvertButton() {
+        convertMoneyBtn.setEnabled(true);
+    }
+
     private void downloadInformationIfNetworkIsAvailable() {
-        if (!isNetworkAvailable()) {
+        if (!ActivityHelper.isNetworkAvailable(this)) {
             ErrorDialogFragment fragment = ErrorDialogFragment.newInstance(getString(R.string.title_error_no_network), getString(R.string.message_error_no_network));
             fragment.show(getFragmentManager(), "FRAGMENT_ERROR");
         } else {
@@ -117,15 +120,9 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-    }
-
     public void getCurrenciesFromService() {
         presenter.getCurrencyMappings(getParent(), key);
-        convertMoneyBtn.setEnabled(true);
+
     }
 
     @Override
