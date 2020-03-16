@@ -27,17 +27,6 @@ public class Currency implements Parcelable {
         this.code = in.readString();
     }
 
-    public static ArrayList<Currency> generateCurrencies(HashMap<String, String> mappings, RateResponse response) {
-        TreeMap<String, Double> rates = response.getRates();
-        ArrayList<Currency> currencies = new ArrayList<>();
-        for (String key : rates.keySet()) {
-            currencies.add(new Currency(key, rates.get(key)));
-        }
-
-        return currencies;
-    }
-
-
     public static final Creator<Currency> CREATOR = new Creator<Currency>() {
         @Override
         public Currency createFromParcel(Parcel source) {
@@ -76,7 +65,7 @@ public class Currency implements Parcelable {
 
     @Override
     public String toString() {
-        return "Currency{" +
+        return "Currency: " +
                 "code='" + code + '\'' +
                 ", rate=" + rate +
                 '}';
