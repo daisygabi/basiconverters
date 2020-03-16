@@ -28,6 +28,7 @@
                 android:id="@+id/codeTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="RON"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -35,12 +36,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
+                android:text="3.34"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/convertedValue"
+                android:id="@+id/convertedValueTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="1000.34"
+                android:visibility="invisible"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
         </LinearLayout>

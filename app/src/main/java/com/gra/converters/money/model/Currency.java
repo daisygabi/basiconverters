@@ -3,10 +3,6 @@ package com.gra.converters.money.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeMap;
-
 public class Currency implements Parcelable {
 
     private Long _id;
@@ -76,12 +72,8 @@ public class Currency implements Parcelable {
         return convertedValue;
     }
 
-    @Override
-    public String toString() {
-        return "Currency: " +
-                "code='" + code + '\'' +
-                ", rate=" + rate +
-                '}';
+    public void setConvertedValue(double convertedValue) {
+        this.convertedValue = convertedValue;
     }
 }
 

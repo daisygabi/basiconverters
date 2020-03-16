@@ -27,6 +27,7 @@ public class CurrencyRecyclerViewAdapter extends RecyclerView.Adapter<CurrencyRe
         // for any view that will be set as you render a row
         public TextView codeTxt;
         public TextView rateTxt;
+        public TextView convertedValueTxt;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -37,6 +38,7 @@ public class CurrencyRecyclerViewAdapter extends RecyclerView.Adapter<CurrencyRe
 
             codeTxt = (TextView) itemView.findViewById(R.id.codeTxt);
             rateTxt = (TextView) itemView.findViewById(R.id.rateTxt);
+            convertedValueTxt = itemView.findViewById(R.id.convertedValueTxt);
         }
     }
 
@@ -54,11 +56,15 @@ public class CurrencyRecyclerViewAdapter extends RecyclerView.Adapter<CurrencyRe
     public void onBindViewHolder(CurrencyRecyclerViewAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         Currency currency = this.currencies.get(position);
+        System.out.println("Currency: " + currency);
 
-        TextView codeTxt = viewHolder.codeTxt;
-        codeTxt.setText(String.valueOf(currency.getCode()));
-        TextView rateTxt = viewHolder.rateTxt;
-        rateTxt.setText(String.valueOf(currency.getRate()));
+        if(currency.getConvertedValue() > 0) {
+            viewHolder.convertedValueTxt.setVisibility(View.VISIBLE);
+            viewHolder.convertedValueTxt.setText(String.valueOf(currency.getConvertedValue()));
+        }
+
+        viewHolder.codeTxt.setText(String.valueOf(currency.getCode()));
+        viewHolder.rateTxt.setText(String.valueOf(currency.getRate()));
     }
 
     @Override

@@ -35,13 +35,13 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     private TextView resultTxt;
     private RecyclerView currenciesRecyclerView;
     private MoneyConverterPresenter presenter;
+    private CurrencyRecyclerViewAdapter recyclerViewAdapter;
     private Currency fromCurrency;
     private Currency toCurrency = new Currency("RON", 4.2984, 0);
 
     private DatabaseHelper databaseHelper;
     private CurrencyAdapter mCurrencyAdapter;
     private String key;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,20 +56,21 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         presenter = new MoneyConverterPresenter(this);
 
         presenter.initRetrofit();
-        initAdapter();
-        initSpinnerOnSelect();
+        initDefaultCurrencySpinnerAdapter();
+        onSelectFromCurrencySpinner();
         convertMoneyBtn.setOnClickListener(this);
         initRecyclerView();
     }
 
     private void initRecyclerView() {
         List<Currency> existingCurrencies = databaseHelper.getCurrencies();
-        CurrencyRecyclerViewAdapter adapter = new CurrencyRecyclerViewAdapter(existingCurrencies);
-        currenciesRecyclerView.setAdapter(adapter);
+        recyclerViewAdapter = new CurrencyRecyclerViewAdapter(existingCurrencies);
+        currenciesRecyclerView.setAdapter(recyclerViewAdapter);
         currenciesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private void initAdapter() {
+    private void initDefaultCurrencySpinnerAdapter() {
         databaseHelper = DatabaseHelper.getInstance(this);
         if (databaseHelper.isDatabaseEmpty()) {
             downloadInformationIfNetworkIsAvailable();
@@ -79,7 +80,7 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         }
     }
 
-    private void initSpinnerOnSelect() {
+    private void onSelectFromCurrencySpinner() {
         currencyTypesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
@@ -92,15 +93,16 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         });
     }
 
-
     @Override
     public void updateSingleValue(double convertedValue) {
         resultTxt.setText(String.valueOf(convertedValue));
     }
 
     @Override
-    public void updateMoneyList() {
-
+    public void updateCurrencyListDetails(List<Currency> currencies) {
+        recyclerViewAdapter = new CurrencyRecyclerViewAdapter(currencies);
+        currenciesRecyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -136,7 +138,6 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
 
     public void getCurrenciesFromService() {
         presenter.getCurrencyMappings(getParent(), key);
-
     }
 
     @Override
@@ -149,6 +150,7 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
                 if (validInput) {
                     double amount = Double.parseDouble(moneyInput.getText().toString());
                     presenter.convertInputMoneyToASpecificCurrency(amount, fromCurrency, toCurrency);
+                    presenter.convertInputMoneyToAllCurrencies(amount, databaseHelper.getCurrencies(), fromCurrency);
                 }
             }
         }

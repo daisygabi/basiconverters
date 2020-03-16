@@ -37,8 +37,12 @@ public class MoneyConverterPresenter implements MoneyConverterContract.Presenter
     }
 
     @Override
-    public void convertInputMoneyToAllCurrencies(double moneyInput) {
-
+    public void convertInputMoneyToAllCurrencies(double moneyInput, List<Currency> currencies, Currency fromCurrency) {
+        for(Currency currency : currencies) {
+            double calculatedAmount = Double.parseDouble(new DecimalFormat("##.###").format(currency.getRate() * (1 / fromCurrency.getRate()) * moneyInput));
+            currency.setConvertedValue(calculatedAmount);
+        }
+        view.updateCurrencyListDetails(currencies);
     }
 
     @Override
