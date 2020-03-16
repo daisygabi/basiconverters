@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,23 +18,12 @@ import com.gra.converters.R;
 import com.gra.converters.money.adapter.CurrencyAdapter;
 import com.gra.converters.money.database.DatabaseHelper;
 import com.gra.converters.money.model.Currency;
-import com.gra.converters.money.model.CurrencyService;
-import com.gra.converters.money.model.RateResponse;
 import com.gra.converters.utils.ActivityHelper;
 import com.gra.converters.utils.ErrorDialogFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-import static android.content.ContentValues.TAG;
+import static com.gra.converters.utils.Constants.TIMESTAMP_KEY;
 
 public class MoneyConverterActivity extends Activity implements MoneyConverterContract.View, View.OnClickListener {
 
@@ -47,11 +35,10 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     private Currency fromCurrency;
     private Currency toCurrency = new Currency("RON", 4.2984);
 
-    private CurrencyService currencyService;
     private DatabaseHelper databaseHelper;
     private CurrencyAdapter mCurrencyAdapter;
     private String key;
-    public static final String TIMESTAMP_KEY = "TIMESTAMP_KEY";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,17 +51,13 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         key = getString(R.string.key);
         presenter = new MoneyConverterPresenter(this);
 
+        presenter.initRetrofit();
         initAdapter();
         initSpinnerOnSelect();
         convertMoneyBtn.setOnClickListener(this);
     }
 
     private void initAdapter() {
-        final RestAdapter adapter = new RestAdapter.Builder()
-                .setEndpoint("http://openexchangerates.org/api")
-                .build();
-
-        currencyService = adapter.create(CurrencyService.class);
         databaseHelper = DatabaseHelper.getInstance(this);
         if (databaseHelper.isDatabaseEmpty()) {
             downloadInformationIfNetworkIsAvailable();
@@ -98,7 +81,6 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     }
 
 
-
     @Override
     public void updateSingleValue(double convertedValue) {
         resultTxt.setText(String.valueOf(convertedValue));
@@ -107,6 +89,18 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     @Override
     public void updateMoneyList() {
 
+    }
+
+    @Override
+    public void updateCurrencySpinner(List<Currency> currencies) {
+        databaseHelper.addCurrencies(currencies);
+        currencyTypesSpinner.setAdapter(mCurrencyAdapter);
+    }
+
+    @Override
+    public void updateTimestampForWhenCurrenciesWereDownloadedLast(long timestamp) {
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        prefs.edit().putLong(TIMESTAMP_KEY, timestamp).apply();
     }
 
     @Override
@@ -130,40 +124,8 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     }
 
     public void getCurrenciesFromService() {
+        presenter.getCurrencyMappings(getParent(), key);
         convertMoneyBtn.setEnabled(true);
-
-        currencyService.getCurrencyMappings(key, new Callback<HashMap<String, String>>() {
-            @Override
-            public void success(HashMap<String, String> responseMap, Response response) {
-                currencyService.getRates(key, new Callback<RateResponse>() {
-                    @Override
-                    public void success(RateResponse rateResponse, Response response) {
-                        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-                        prefs.edit().putLong(TIMESTAMP_KEY, rateResponse.getTimestamp()).apply();
-                        TreeMap<String, Double> ratesMap = rateResponse.getRates();
-
-                        List<Currency> allCurrencies = new ArrayList<>();
-                        for (Map.Entry<String, Double> entry : ratesMap.entrySet()) {
-                            Currency currency = new Currency(entry.getKey(), entry.getValue());
-                            allCurrencies.add(currency);
-                        }
-
-                        databaseHelper.addCurrencies(allCurrencies);
-                        currencyTypesSpinner.setAdapter(mCurrencyAdapter);
-                        convertMoneyBtn.setEnabled(true);
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                    }
-                });
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e(TAG, error.getLocalizedMessage());
-            }
-        });
     }
 
     @Override
