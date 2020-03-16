@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Basic Converters</string>
+
+    <string name="prompt_description">You can convert any amount you want with the current Money Rates. Choose the base currency first and then press the "Convert" button. A list of all existing currencies will be shown.</string>
+    <string name="prompt_currency_type">Currency</string>
+    <string name="prompt_money_input">Value to convert</string>
+    <string name="action_convert_money">Convert</string>
+    <string name="title_error_no_network">Network Error</string>
+    <string name="message_error_no_network">No active network connection found.</string>
+    <string name="key">81c3e825a1644b44b986921b1af48bc5</string>
+</resources>
