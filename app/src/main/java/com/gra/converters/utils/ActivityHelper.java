@@ -2,7 +2,10 @@ package com.gra.converters.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class ActivityHelper {
 
@@ -23,5 +26,11 @@ public class ActivityHelper {
                 });
 
         builder.show();
+    }
+
+    public static boolean isNetworkAvailable(final Activity activity) {
+        ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 }

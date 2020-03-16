@@ -18,6 +18,8 @@ public interface MoneyConverterContract {
         void updateTimestampForWhenCurrenciesWereDownloadedLast(long timestamp);
 
         void showError();
+
+        void enableConvertButton();
     }
 
     interface Presenter {
