@@ -42,12 +42,10 @@ public class MoneyConverterPresenter implements MoneyConverterContract.Presenter
     }
 
     @Override
-    public boolean validateInput(String inputToValidate) {
+    public void validateInput(String inputToValidate) {
         if (inputToValidate == null && !inputToValidate.isEmpty() && Double.parseDouble(inputToValidate) > 0) {
             view.showError();
-            return false;
         }
-        return true;
     }
 
     @Override
