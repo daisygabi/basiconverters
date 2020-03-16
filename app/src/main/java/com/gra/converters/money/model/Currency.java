@@ -12,6 +12,7 @@ public class Currency implements Parcelable {
     private Long _id;
     private double rate;
     private String code;
+    private double convertedValue;
 
     public Currency() {
     }
@@ -21,10 +22,17 @@ public class Currency implements Parcelable {
         this.code = code;
     }
 
+    public Currency(String code, double rate, double convertedValue) {
+        this.rate = rate;
+        this.code = code;
+        this.convertedValue = convertedValue;
+    }
+
     private Currency(Parcel in) {
         this._id = in.readLong();
         this.rate = in.readDouble();
         this.code = in.readString();
+        this.convertedValue = in.readDouble();
     }
 
     public static final Creator<Currency> CREATOR = new Creator<Currency>() {
@@ -49,6 +57,7 @@ public class Currency implements Parcelable {
         dest.writeLong(this._id);
         dest.writeDouble(this.rate);
         dest.writeString(this.code);
+        dest.writeDouble(this.convertedValue);
     }
 
     public Long get_id() {
@@ -61,6 +70,10 @@ public class Currency implements Parcelable {
 
     public String getCode() {
         return code;
+    }
+
+    public double getConvertedValue() {
+        return convertedValue;
     }
 
     @Override
