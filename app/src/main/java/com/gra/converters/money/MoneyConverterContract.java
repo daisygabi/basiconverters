@@ -11,7 +11,7 @@ public interface MoneyConverterContract {
     interface View {
         void updateSingleValue(double convertedValue);
 
-        void updateMoneyList();
+        void updateCurrencyListDetails(List<Currency> currencies);
 
         void updateCurrencySpinner(List<Currency> currencies);
 
@@ -25,7 +25,7 @@ public interface MoneyConverterContract {
     interface Presenter {
         void convertInputMoneyToASpecificCurrency(double moneyInput, Currency toCurrency, Currency fromCurrency);
 
-        void convertInputMoneyToAllCurrencies(double moneyInput);
+        void convertInputMoneyToAllCurrencies(double moneyInput, List<Currency> currencies, Currency fromCurrency);
 
         boolean validateInput(String inputToValidate);
 
