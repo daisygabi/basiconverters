@@ -27,7 +27,7 @@ public interface MoneyConverterContract {
 
         void convertInputMoneyToAllCurrencies(double moneyInput);
 
-        void validateInput(String inputToValidate);
+        boolean validateInput(String inputToValidate);
 
         void getCurrencyMappings(Activity activity, String key);
 

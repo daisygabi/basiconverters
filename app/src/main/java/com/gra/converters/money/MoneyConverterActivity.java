@@ -128,15 +128,14 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     @Override
     public void onClick(View view) {
         if (view.getId() == convertMoneyBtn.getId()) {
-            if (moneyInput.getText().toString().isEmpty()) {
-                ActivityHelper.createAlertDialog(getParent(), "Amount can't be empty", "Please enter Amount");
-            } else if (currencyTypesSpinner.getSelectedItemPosition() == 0) {
-                ActivityHelper.createAlertDialog(getParent(), "Base currency can't be empty", "Choose a currency from which you wan to convert");
-            } else if (currencyTypesSpinner.getSelectedItemPosition() == 0) {
-                ActivityHelper.createAlertDialog(getParent(), "Convert currency can't be empty", "Choose a currency to which you want to convert");
+            if (currencyTypesSpinner.getSelectedItemPosition() == 0) {
+                ActivityHelper.createAlertDialog(this, "Missing Information", "Please select the base currency");
             } else {
-                Double amount = Double.parseDouble(moneyInput.getText().toString());
-                presenter.convertInputMoneyToASpecificCurrency(amount, fromCurrency, toCurrency);
+                boolean validInput = presenter.validateInput(moneyInput.getText().toString());
+                if (validInput) {
+                    double amount = Double.parseDouble(moneyInput.getText().toString());
+                    presenter.convertInputMoneyToASpecificCurrency(amount, fromCurrency, toCurrency);
+                }
             }
         }
     }
