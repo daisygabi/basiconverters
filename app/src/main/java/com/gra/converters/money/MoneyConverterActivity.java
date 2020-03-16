@@ -12,8 +12,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.gra.converters.R;
 import com.gra.converters.money.adapter.CurrencyAdapter;
+import com.gra.converters.money.adapter.CurrencyRecyclerViewAdapter;
 import com.gra.converters.money.database.DatabaseHelper;
 import com.gra.converters.money.model.Currency;
 import com.gra.converters.utils.ActivityHelper;
@@ -29,9 +33,10 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     private EditText moneyInput;
     private Button convertMoneyBtn;
     private TextView resultTxt;
+    private RecyclerView currenciesRecyclerView;
     private MoneyConverterPresenter presenter;
     private Currency fromCurrency;
-    private Currency toCurrency = new Currency("RON", 4.2984);
+    private Currency toCurrency = new Currency("RON", 4.2984, 0);
 
     private DatabaseHelper databaseHelper;
     private CurrencyAdapter mCurrencyAdapter;
@@ -46,6 +51,7 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         moneyInput = findViewById(R.id.moneyInput);
         convertMoneyBtn = findViewById(R.id.convertMoneyBtn);
         resultTxt = findViewById(R.id.resultTxt);
+        currenciesRecyclerView = findViewById(R.id.currenciesRecyclerView);
         key = getString(R.string.key);
         presenter = new MoneyConverterPresenter(this);
 
@@ -53,6 +59,14 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         initAdapter();
         initSpinnerOnSelect();
         convertMoneyBtn.setOnClickListener(this);
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        List<Currency> existingCurrencies = databaseHelper.getCurrencies();
+        CurrencyRecyclerViewAdapter adapter = new CurrencyRecyclerViewAdapter(existingCurrencies);
+        currenciesRecyclerView.setAdapter(adapter);
+        currenciesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initAdapter() {
