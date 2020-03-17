@@ -35,7 +35,6 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     private MoneyConverterPresenter presenter;
     private CurrencyRecyclerViewAdapter recyclerViewAdapter;
     private Currency fromCurrency;
-    private Currency toCurrency = new Currency("RON", 4.2984, 0);
 
     private DatabaseHelper databaseHelper;
     private CurrencyAdapter mCurrencyAdapter;
