@@ -1,55 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    tools:ignore="RtlHardcoded">
+    android:layout_margin="5dp"
+    android:background="@color/backgroundItem"
+    android:paddingTop="5dp"
+    android:paddingBottom="8dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/codeTxt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:orientation="vertical">
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="1dp"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+    <TextView
+        android:id="@+id/rateTxt"
+        android:layout_width="107dp"
+        android:layout_height="16dp"
+        android:layout_below="@+id/codeTxt"
+        android:layout_alignStart="@+id/convertedValueTxt"
+        android:layout_marginStart="-58dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="-49dp"
+        android:layout_toStartOf="@+id/convertedValueTxt"
+        android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/codeTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RON"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/convertedValueTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/codeTxt"
+        android:layout_alignStart="@+id/codeTxt"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="4dp"
+        android:hint="[]"
+        android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/rateTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="3.34"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/convertedValueTxt"
+        android:layout_marginTop="8dp" />
 
-            <TextView
-                android:id="@+id/convertedValueTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="1000.34"
-                android:visibility="invisible"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

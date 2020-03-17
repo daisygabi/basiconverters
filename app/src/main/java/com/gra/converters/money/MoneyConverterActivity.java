@@ -61,7 +61,7 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
 
     private void initRecyclerView() {
         List<Currency> existingCurrencies = databaseHelper.getCurrencies();
-        recyclerViewAdapter = new CurrencyRecyclerViewAdapter(existingCurrencies);
+        recyclerViewAdapter = new CurrencyRecyclerViewAdapter(existingCurrencies, this);
         currenciesRecyclerView.setAdapter(recyclerViewAdapter);
         currenciesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewAdapter.notifyDataSetChanged();
@@ -92,7 +92,7 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
 
     @Override
     public void updateCurrencyListDetails(List<Currency> currencies) {
-        recyclerViewAdapter = new CurrencyRecyclerViewAdapter(currencies);
+        recyclerViewAdapter = new CurrencyRecyclerViewAdapter(currencies, this);
         currenciesRecyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
     }
