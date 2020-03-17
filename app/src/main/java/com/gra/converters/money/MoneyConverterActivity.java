@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +31,6 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
     private Spinner currencyTypesSpinner;
     private EditText moneyInput;
     private Button convertMoneyBtn;
-    private TextView resultTxt;
     private RecyclerView currenciesRecyclerView;
     private MoneyConverterPresenter presenter;
     private CurrencyRecyclerViewAdapter recyclerViewAdapter;
@@ -50,7 +48,6 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
         currencyTypesSpinner = findViewById(R.id.currencyTypes);
         moneyInput = findViewById(R.id.moneyInput);
         convertMoneyBtn = findViewById(R.id.convertMoneyBtn);
-        resultTxt = findViewById(R.id.resultTxt);
         currenciesRecyclerView = findViewById(R.id.currenciesRecyclerView);
         key = getString(R.string.key);
         presenter = new MoneyConverterPresenter(this);
@@ -91,11 +88,6 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-    }
-
-    @Override
-    public void updateSingleValue(double convertedValue) {
-        resultTxt.setText(String.valueOf(convertedValue));
     }
 
     @Override
@@ -149,7 +141,6 @@ public class MoneyConverterActivity extends Activity implements MoneyConverterCo
                 boolean validInput = presenter.validateInput(moneyInput.getText().toString());
                 if (validInput) {
                     double amount = Double.parseDouble(moneyInput.getText().toString());
-                    presenter.convertInputMoneyToASpecificCurrency(amount, fromCurrency, toCurrency);
                     presenter.convertInputMoneyToAllCurrencies(amount, databaseHelper.getCurrencies(), fromCurrency);
                 }
             }
