@@ -67,17 +67,6 @@
             app:layout_constraintTop_toBottomOf="@+id/moneyInput"
             app:layout_constraintVertical_bias="0.109" />
 
-        <TextView
-            android:id="@+id/resultTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/convertMoneyBtn"
-            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView"

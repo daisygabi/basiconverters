@@ -31,12 +31,6 @@ public class MoneyConverterPresenter implements MoneyConverterContract.Presenter
     }
 
     @Override
-    public void convertInputMoneyToASpecificCurrency(double moneyInput, Currency toCurrency, Currency fromCurrency) {
-        double calculatedAmount = Double.parseDouble(new DecimalFormat("##.###").format(toCurrency.getRate() * (1 / fromCurrency.getRate()) * moneyInput));
-        view.updateSingleValue(calculatedAmount);
-    }
-
-    @Override
     public void convertInputMoneyToAllCurrencies(double moneyInput, List<Currency> currencies, Currency fromCurrency) {
         for(Currency currency : currencies) {
             double calculatedAmount = Double.parseDouble(new DecimalFormat("##.###").format(currency.getRate() * (1 / fromCurrency.getRate()) * moneyInput));
