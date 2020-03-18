@@ -1,6 +1,5 @@
 package com.gra.converters.money;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,7 +99,10 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
     @Override
     public void updateCurrencySpinner(List<Currency> currencies) {
         databaseHelper.addCurrencies(currencies);
+
+        mCurrencyAdapter = new CurrencyAdapter(this);
         currencyTypesSpinner.setAdapter(mCurrencyAdapter);
+        mCurrencyAdapter.notifyDataSetChanged();
     }
 
     @Override
