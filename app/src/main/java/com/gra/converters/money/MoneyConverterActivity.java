@@ -1,6 +1,6 @@
 package com.gra.converters.money;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import java.util.List;
 
 import static com.gra.converters.utils.Constants.TIMESTAMP_KEY;
 
-public class MoneyConverterActivity extends Activity implements MoneyConverterContract.View, View.OnClickListener {
+public class MoneyConverterActivity extends AppCompatActivity implements MoneyConverterContract.View, View.OnClickListener {
 
     private Spinner currencyTypesSpinner;
     private EditText moneyInput;
