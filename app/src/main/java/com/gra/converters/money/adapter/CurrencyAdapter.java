@@ -59,7 +59,7 @@ public class CurrencyAdapter extends BaseAdapter {
 
         Currency currency = currencies.get(position);
         if (position == 0) {
-            holder.currencyNameView.setText("Base Currency");
+            holder.currencyNameView.setText("From Currency");
         } else {
             holder.currencyNameView.setText(currency.getCode());
         }
