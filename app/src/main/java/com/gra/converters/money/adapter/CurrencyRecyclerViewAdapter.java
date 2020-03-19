@@ -26,17 +26,11 @@ public class CurrencyRecyclerViewAdapter extends RecyclerView.Adapter<CurrencyRe
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
         public TextView codeTxt;
         public TextView rateTxt;
         public TextView convertedValueTxt;
 
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
             super(itemView);
 
             codeTxt = (TextView) itemView.findViewById(R.id.codeTxt);
@@ -51,17 +45,14 @@ public class CurrencyRecyclerViewAdapter extends RecyclerView.Adapter<CurrencyRe
         LayoutInflater inflater = LayoutInflater.from(context);
         View contactView = inflater.inflate(R.layout.currency_recyclerview_item, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(contactView);
-        return viewHolder;
+        return new ViewHolder(contactView);
     }
 
     @Override
     public void onBindViewHolder(CurrencyRecyclerViewAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         Currency currency = this.currencies.get(position);
-        System.out.println("Currency: " + currency);
-
-        if(currency.getConvertedValue() > 0) {
+        if (currency.getConvertedValue() > 0) {
             viewHolder.convertedValueTxt.setVisibility(View.VISIBLE);
             viewHolder.convertedValueTxt.setText(activity.getResources().getString(R.string.converted_value_label) + " " + currency.getConvertedValue());
         }

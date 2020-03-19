@@ -94,6 +94,9 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
 
     @Override
     public void updateCurrencyListDetails(List<Currency> currencies) {
+        databaseHelper.deleteAllCurrencies(databaseHelper.getWritableDatabase());
+        databaseHelper.addCurrencies(currencies);
+
         recyclerViewAdapter = new CurrencyRecyclerViewAdapter(currencies, this);
         currenciesRecyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();

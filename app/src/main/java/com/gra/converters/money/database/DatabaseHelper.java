@@ -17,19 +17,19 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "SQLHelper";
-    private static final String DATABASE_NAME = "Currenciesq.db";
+    private static final String DATABASE_NAME = "CurrencieDB.db";
     private static final int DATABASE_VERSION = 1;
     private static DatabaseHelper instance = null;
 
-    private Context mContext;
+    private Context context;
 
     static {
         cupboard().register(Currency.class);
     }
 
-    private DatabaseHelper(Context c) {
-        super(c, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = c;
+    private DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     public static DatabaseHelper getInstance(Context context) {
@@ -78,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.e(TAG, "Error adding currencies to localstorage " + e.getLocalizedMessage());
+            Log.e(TAG, "Error adding currencies to local storage " + e.getLocalizedMessage());
         } finally {
             db.endTransaction();
         }
@@ -89,8 +89,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             currencies = cupboard().withDatabase(getReadableDatabase()).query(Currency.class).list();
         } catch (Exception e) {
-            Log.e(TAG, "Could not fetch currencies" + e.getLocalizedMessage());
+            Log.e(TAG, "Could not get currencies" + e.getLocalizedMessage());
         }
         return currencies;
+    }
+
+    public void deleteAllCurrencies(SQLiteDatabase db) {
+        cupboard().withDatabase(db).delete(Currency.class,null);
     }
 }
