@@ -1,4 +1,6 @@
-package com.gra.converters.money.model;
+package com.gra.converters.money.services;
+
+import com.gra.converters.money.services.dto.RateResponse;
 
 import java.util.HashMap;
 

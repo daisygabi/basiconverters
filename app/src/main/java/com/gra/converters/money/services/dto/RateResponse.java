@@ -1,10 +1,12 @@
-package com.gra.converters.money.model;
+package com.gra.converters.money.services.dto;
 
 import java.util.TreeMap;
 
+/**
+ * Domain response from external Currency API
+ */
 public class RateResponse {
     private long timestamp;
-//    private HashMap<String, Double> rates;
     private TreeMap<String, Double> rates;
 
     public long getTimestamp() {

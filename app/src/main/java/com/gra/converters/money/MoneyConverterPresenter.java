@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.gra.converters.money.model.Currency;
-import com.gra.converters.money.model.CurrencyService;
-import com.gra.converters.money.model.RateResponse;
+import com.gra.converters.money.services.CurrencyService;
+import com.gra.converters.money.services.dto.RateResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
