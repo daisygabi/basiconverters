@@ -35,6 +35,7 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
     private MoneyConverterPresenter presenter;
     private CurrencyRecyclerViewAdapter recyclerViewAdapter;
     private Currency fromCurrency;
+    private EditText searchInListTxt;
 
     private DatabaseHelper databaseHelper;
     private CurrencyAdapter mCurrencyAdapter;
@@ -48,6 +49,8 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
         moneyInput = findViewById(R.id.moneyInput);
         convertMoneyBtn = findViewById(R.id.convertMoneyBtn);
         currenciesRecyclerView = findViewById(R.id.currenciesRecyclerView);
+        searchInListTxt = findViewById(R.id.searchInListTxt);
+
         key = getString(R.string.key);
         presenter = new MoneyConverterPresenter(this);
 
@@ -94,6 +97,8 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
         recyclerViewAdapter = new CurrencyRecyclerViewAdapter(currencies, this);
         currenciesRecyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
+
+        searchInListTxt.setVisibility(View.VISIBLE);
     }
 
     @Override
