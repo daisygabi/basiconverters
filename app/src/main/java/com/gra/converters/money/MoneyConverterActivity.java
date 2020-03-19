@@ -20,7 +20,6 @@ import com.gra.converters.money.adapter.CurrencyRecyclerViewAdapter;
 import com.gra.converters.money.database.DatabaseHelper;
 import com.gra.converters.money.model.Currency;
 import com.gra.converters.utils.ActivityHelper;
-import com.gra.converters.utils.ErrorDialogFragment;
 
 import java.util.List;
 
@@ -131,8 +130,7 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
 
     private void downloadInformationIfNetworkIsAvailable() {
         if (!ActivityHelper.isNetworkAvailable(this)) {
-            ErrorDialogFragment fragment = ErrorDialogFragment.newInstance(getString(R.string.title_error_no_network), getString(R.string.message_error_no_network));
-            fragment.show(getFragmentManager(), "FRAGMENT_ERROR");
+            ActivityHelper.createAlertDialog(this, getString(R.string.title_error_no_network), getString(R.string.message_error_no_network));
         } else {
             getCurrenciesFromService();
         }
@@ -144,9 +142,9 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == convertMoneyBtn.getId()) {
+        if (ActivityHelper.isNetworkAvailable(this) && view.getId() == convertMoneyBtn.getId()) {
             if (currencyTypesSpinner.getSelectedItemPosition() == 0) {
-                ActivityHelper.createAlertDialog(this, "Missing Information", "Please select the base currency");
+                ActivityHelper.createAlertDialog(this, getString(R.string.missing_information), getString(R.string.select_base_label));
             } else {
                 boolean validInput = presenter.validateInput(moneyInput.getText().toString());
                 if (validInput) {
@@ -154,6 +152,8 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
                     presenter.convertInputMoneyToAllCurrencies(amount, databaseHelper.getCurrencies(), fromCurrency);
                 }
             }
+        } else {
+            ActivityHelper.createAlertDialog(this, getString(R.string.title_error_no_network), getString(R.string.message_error_no_network));
         }
     }
 }
