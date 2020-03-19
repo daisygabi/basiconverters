@@ -63,7 +63,7 @@ public class CurrencyRecyclerViewAdapter extends RecyclerView.Adapter<CurrencyRe
 
         if(currency.getConvertedValue() > 0) {
             viewHolder.convertedValueTxt.setVisibility(View.VISIBLE);
-            viewHolder.convertedValueTxt.setText(activity.getResources().getString(R.string.converted_value_label) + currency.getConvertedValue());
+            viewHolder.convertedValueTxt.setText(activity.getResources().getString(R.string.converted_value_label) + " " + currency.getConvertedValue());
         }
 
         viewHolder.codeTxt.setText(String.valueOf(currency.getCode()));

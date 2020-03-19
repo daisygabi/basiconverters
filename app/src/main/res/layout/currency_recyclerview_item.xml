@@ -36,7 +36,7 @@
         android:layout_alignStart="@+id/codeTxt"
         android:layout_marginStart="59dp"
         android:layout_marginTop="4dp"
-        android:hint="Converted Value:"
+        android:hint="@string/converted_value_label"
         android:textSize="12sp" />
 
     <View
