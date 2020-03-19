@@ -23,18 +23,27 @@ import com.gra.converters.utils.ActivityHelper;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.gra.converters.utils.Constants.TIMESTAMP_KEY;
 
 public class MoneyConverterActivity extends AppCompatActivity implements MoneyConverterContract.View, View.OnClickListener {
 
-    private Spinner currencyTypesSpinner;
-    private EditText moneyInput;
-    private Button convertMoneyBtn;
-    private RecyclerView currenciesRecyclerView;
+    @BindView(R.id.currencyTypes)
+    Spinner currencyTypesSpinner;
+    @BindView(R.id.moneyInput)
+    EditText moneyInput;
+    @BindView(R.id.convertMoneyBtn)
+    Button convertMoneyBtn;
+    @BindView(R.id.currenciesRecyclerView)
+    RecyclerView currenciesRecyclerView;
+    @BindView(R.id.searchInListTxt)
+    EditText searchInListTxt;
+
     private MoneyConverterPresenter presenter;
     private CurrencyRecyclerViewAdapter recyclerViewAdapter;
     private Currency fromCurrency;
-    private EditText searchInListTxt;
 
     private DatabaseHelper databaseHelper;
     private CurrencyAdapter mCurrencyAdapter;
@@ -44,11 +53,7 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.money_converter_activity);
-        currencyTypesSpinner = findViewById(R.id.currencyTypes);
-        moneyInput = findViewById(R.id.moneyInput);
-        convertMoneyBtn = findViewById(R.id.convertMoneyBtn);
-        currenciesRecyclerView = findViewById(R.id.currenciesRecyclerView);
-        searchInListTxt = findViewById(R.id.searchInListTxt);
+        ButterKnife.bind(this);
 
         key = getString(R.string.key);
         presenter = new MoneyConverterPresenter(this);
