@@ -8,7 +8,7 @@
     <string name="title_error_no_network">Network Error</string>
     <string name="message_error_no_network">No active network connection found.</string>
     <string name="key">81c3e825a1644b44b986921b1af48bc5</string>
-    <string name="converted_value_label">Converted Value =</string>
+    <string name="converted_value_label">Value =</string>
     <string name="search_in_list_label">Search</string>
     <string name="missing_information">Missing Information</string>
     <string name="select_base_label">Please select the from currency.</string>
