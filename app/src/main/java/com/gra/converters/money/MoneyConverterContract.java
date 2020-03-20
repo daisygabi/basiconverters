@@ -28,5 +28,7 @@ public interface MoneyConverterContract {
         void getCurrencyMappings(Activity activity, String key);
 
         void initRetrofit();
+
+        void saveDataInSharedPrefs(String moneyInput, int selectedItemPosition);
     }
 }

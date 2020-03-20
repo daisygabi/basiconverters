@@ -6,6 +6,8 @@ import android.util.Log;
 import com.gra.converters.money.model.Currency;
 import com.gra.converters.money.services.CurrencyService;
 import com.gra.converters.money.services.dto.RateResponse;
+import com.gra.converters.utils.Constants;
+import com.gra.converters.utils.SharedPrefsUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class MoneyConverterPresenter implements MoneyConverterContract.Presenter
 
     @Override
     public void convertInputMoneyToAllCurrencies(double moneyInput, List<Currency> currencies, Currency fromCurrency) {
-        for(Currency currency : currencies) {
+        for (Currency currency : currencies) {
             double calculatedAmount = Double.parseDouble(new DecimalFormat("##.###").format(currency.getRate() * (1 / fromCurrency.getRate()) * moneyInput));
             currency.setConvertedValue(calculatedAmount);
         }
@@ -95,5 +97,11 @@ public class MoneyConverterPresenter implements MoneyConverterContract.Presenter
                 .build();
 
         currencyService = adapter.create(CurrencyService.class);
+    }
+
+    @Override
+    public void saveDataInSharedPrefs(String moneyInput, int selectedItemPosition) {
+        SharedPrefsUtils.getInstance().addLongValue(Constants.AMOUNT, Long.parseLong(moneyInput.trim()));
+        SharedPrefsUtils.getInstance().addIntValue(Constants.BASE_CURRENCY_POSITION, selectedItemPosition);
     }
 }

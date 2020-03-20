@@ -168,9 +168,7 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
                 if (validInput) {
                     double amount = Double.parseDouble(moneyInput.getText().toString());
                     presenter.convertInputMoneyToAllCurrencies(amount, databaseHelper.getCurrencies(), fromCurrency);
-
-                    SharedPrefsUtils.getInstance().addLongValue(Constants.AMOUNT, Long.parseLong(moneyInput.getText().toString().trim()));
-                    SharedPrefsUtils.getInstance().addIntValue(Constants.BASE_CURRENCY_POSITION, currencyTypesSpinner.getSelectedItemPosition());
+                    presenter.saveDataInSharedPrefs(moneyInput.getText().toString(), currencyTypesSpinner.getSelectedItemPosition());
                 }
             }
         } else {
