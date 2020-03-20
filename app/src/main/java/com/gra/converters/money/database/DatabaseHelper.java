@@ -16,7 +16,7 @@ import nl.qbusict.cupboard.convert.EntityConverter;
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 /**
- * Database light operations using Cupboard https://guides.codepath.org/android/Easier-SQL-with-Cupboard
+ * Database operations using Cupboard https://guides.codepath.org/android/Easier-SQL-with-Cupboard
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
