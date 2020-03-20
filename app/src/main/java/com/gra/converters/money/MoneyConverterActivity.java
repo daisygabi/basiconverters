@@ -20,6 +20,8 @@ import com.gra.converters.money.adapter.CurrencyRecyclerViewAdapter;
 import com.gra.converters.money.database.DatabaseHelper;
 import com.gra.converters.money.model.Currency;
 import com.gra.converters.utils.ActivityHelper;
+import com.gra.converters.utils.Constants;
+import com.gra.converters.utils.SharedPrefsUtils;
 
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
     private Currency fromCurrency;
 
     private DatabaseHelper databaseHelper;
-    private CurrencyAdapter mCurrencyAdapter;
+    private CurrencyAdapter currencyAdapter;
     private String key;
 
     @Override
@@ -57,12 +59,20 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
 
         key = getString(R.string.key);
         presenter = new MoneyConverterPresenter(this);
-
         presenter.initRetrofit();
-        initDefaultCurrencySpinnerAdapter();
+
+        addListeners();
+
+        long defaultMoneyValue = SharedPrefsUtils.getInstance().isValueInMemory(Constants.AMOUNT) ? SharedPrefsUtils.getInstance().getLongValue(Constants.AMOUNT) : 0;
+        moneyInput.setText(defaultMoneyValue > 0 ? String.valueOf(defaultMoneyValue) : "");
+
+        initBaseCurrencySpinnerAdapter();
         onSelectFromCurrencySpinner();
-        convertMoneyBtn.setOnClickListener(this);
         initRecyclerView();
+    }
+
+    private void addListeners() {
+        convertMoneyBtn.setOnClickListener(this);
     }
 
     private void initRecyclerView() {
@@ -73,13 +83,16 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private void initDefaultCurrencySpinnerAdapter() {
+    private void initBaseCurrencySpinnerAdapter() {
         databaseHelper = DatabaseHelper.getInstance(this);
         if (databaseHelper.isDatabaseEmpty()) {
             downloadInformationIfNetworkIsAvailable();
         } else {
-            mCurrencyAdapter = new CurrencyAdapter(this);
-            currencyTypesSpinner.setAdapter(mCurrencyAdapter);
+            currencyAdapter = new CurrencyAdapter(this);
+            currencyTypesSpinner.setAdapter(currencyAdapter);
+
+            int alreadySelectedItemPosition = SharedPrefsUtils.getInstance().isValueInMemory(Constants.BASE_CURRENCY_POSITION) ? SharedPrefsUtils.getInstance().getIntValue(Constants.BASE_CURRENCY_POSITION) : 0;
+            currencyTypesSpinner.setSelection((alreadySelectedItemPosition), true);
         }
     }
 
@@ -112,9 +125,9 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
     public void updateCurrencySpinner(List<Currency> currencies) {
         databaseHelper.addCurrencies(currencies);
 
-        mCurrencyAdapter = new CurrencyAdapter(this);
-        currencyTypesSpinner.setAdapter(mCurrencyAdapter);
-        mCurrencyAdapter.notifyDataSetChanged();
+        currencyAdapter = new CurrencyAdapter(this);
+        currencyTypesSpinner.setAdapter(currencyAdapter);
+        currencyAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -155,6 +168,9 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
                 if (validInput) {
                     double amount = Double.parseDouble(moneyInput.getText().toString());
                     presenter.convertInputMoneyToAllCurrencies(amount, databaseHelper.getCurrencies(), fromCurrency);
+
+                    SharedPrefsUtils.getInstance().addLongValue(Constants.AMOUNT, Long.parseLong(moneyInput.getText().toString().trim()));
+                    SharedPrefsUtils.getInstance().addIntValue(Constants.BASE_CURRENCY_POSITION, currencyTypesSpinner.getSelectedItemPosition());
                 }
             }
         } else {

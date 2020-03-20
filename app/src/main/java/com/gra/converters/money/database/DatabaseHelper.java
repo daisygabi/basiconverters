@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
- import com.gra.converters.money.model.Currency;
+import com.gra.converters.money.model.Currency;
+import com.gra.converters.utils.Constants;
 
 import java.util.List;
 
@@ -19,7 +20,6 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = "SQLHelper";
     private static final String DATABASE_NAME = "CurrencieDB.db";
     private static final int DATABASE_VERSION = 1;
     private static DatabaseHelper instance = null;
@@ -72,16 +72,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
-            for (Currency c : currencies) {
+            for (Currency currency : currencies) {
                 if (isEmpty) {
-                    addCurrency(c);
+                    addCurrency(currency);
                 } else {
-                    updateCurrency(c);
+                    updateCurrency(currency);
                 }
             }
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.e(TAG, "Error adding currencies to local storage " + e.getLocalizedMessage());
+            Log.e(Constants.TAG, "Error adding currencies to local storage " + e.getLocalizedMessage());
         } finally {
             db.endTransaction();
         }
@@ -92,12 +92,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             currencies = cupboard().withDatabase(getReadableDatabase()).query(Currency.class).list();
         } catch (Exception e) {
-            Log.e(TAG, "Could not get currencies" + e.getLocalizedMessage());
+            Log.e(Constants.TAG, "Could not get currencies" + e.getLocalizedMessage());
         }
         return currencies;
     }
 
     public void deleteAllCurrencies(SQLiteDatabase db) {
-        cupboard().withDatabase(db).delete(Currency.class,null);
+        cupboard().withDatabase(db).delete(Currency.class, null);
     }
 }
