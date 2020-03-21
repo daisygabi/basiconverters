@@ -40,6 +40,8 @@ public class MoneyConverterActivity extends AppCompatActivity implements MoneyCo
     Button convertMoneyBtn;
     @BindView(R.id.currenciesRecyclerView)
     RecyclerView currenciesRecyclerView;
+    @BindView(R.id.searchInListTxt)
+    EditText searchInListTxt;
 
     private MoneyConverterPresenter presenter;
     private CurrencyRecyclerViewAdapter recyclerViewAdapter;
