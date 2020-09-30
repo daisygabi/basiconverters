@@ -1,4 +1,4 @@
-# basiconverters
+# Android app: basic money converters
 <b>Why?</b>
 The point of this project is to have fun while doing something useful. Converters! Starting timid with money conveters, moving on to degrees and quantities.
 The code is MIT because I want anyone to have access to the code and use it for good only. (Doooh!)
@@ -13,7 +13,7 @@ I love the idea of having my own apps that I keep for my own personal use, away 
 <li>Sqlite with nl.qbusict:cupboard: because I want to have minimal 3rd Libraries that are simple and simple to use</li>
 <li>Retrofit for requests</li>
 <li>compileSdkVersion 29</li>
-<li>buildToolsVersion "29.0.2"</li>
+<li>buildToolsVersion 29.0.2</li>
 </ul>
 
 Happy Coding!
