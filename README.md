@@ -1,4 +1,4 @@
-# Android app: basic money converters
+# [Not maintained] Android app: basic money converters
 <b>Why?</b>
 The point of this project is to have fun while doing something useful. Converters! Starting timid with money conveters, moving on to degrees and quantities.
 The code is MIT because I want anyone to have access to the code and use it for good only. (Doooh!)
